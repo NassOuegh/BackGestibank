@@ -23,9 +23,9 @@ MongoClient.connect(url, function (err, client) {
   db = client.db(dbName);
 });
 
-app.get("/users", (req, res) => {
+app.get("/clients/list", (req, res) => {
   db.collection("user")
-    .find({})
+    .find({"role": "CLIENT"})
     .toArray(function (err, docs) {
       if (err) {
         console.log(err);
@@ -35,10 +35,22 @@ app.get("/users", (req, res) => {
     });
 });
 
-app.get("/users/:id", async (req, res) => {
+app.get("/clients/list/attente", (req, res) => {
+  db.collection("user")
+    .find({"role": "CLIENT", "status": "EN ATTENTE"})
+    .toArray(function (err, docs) {
+      if (err) {
+        console.log(err);
+        throw err;
+      }
+      res.status(200).json(docs);
+    });
+});
+
+app.get("/clients/list/:mail", async (req, res) => {
   const id = parseInt(req.params.id);
   try {
-    const docs = await db.collection("user").findOne({ id });
+    const docs = await db.collection("user").findOne({ mail });
     res.status(200).json(docs);
   } catch (err) {
     console.log(err);
@@ -46,7 +58,7 @@ app.get("/users/:id", async (req, res) => {
   }
 });
 
-app.post("/users", async (req, res) => {
+app.post("/clients/add", async (req, res) => {
   try {
     const userData = req.body;
     const user = await db.collection("user").insertOne(userData);
@@ -57,13 +69,13 @@ app.post("/users", async (req, res) => {
   }
 });
 
-app.put("/users/:id", async (req, res) => {
+app.put("/clients/:mail", async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     const replacementUser = req.body;
     const user = await db
       .collection("user")
-      .replaceOne({ id }, replacementUser);
+      .replaceOne({ mail }, replacementUser);
     res.status(200).json(user);
   } catch (err) {
     console.log(err);
@@ -71,13 +83,50 @@ app.put("/users/:id", async (req, res) => {
   }
 });
 
-app.delete("/users/:id", async (req, res) => {
+app.delete("/users/:mail", async (req, res) => {
   try {
     const id = parseInt(req.params.id);
-    const user = await db.collection("user").deleteOne({ id });
+    const user = await db.collection("user").deleteOne({ mail });
     res.status(200).json(user);
   } catch (err) {
     console.log(err);
     throw err;
   }
 });
+
+// Tous les agents
+app.get('/agents/list/', (req,res) => {
+  db.collection('user').find({"role": "AGENT"}).toArray(function(err, docs) {
+      if (err) {
+          console.log(err)
+          throw err
+      }
+      res.status(200).json(docs)
+    }) 
+})
+
+// Ajout d'un nouvel agent par l'admin
+app.post('/agents/add/', async (req,res) => {
+  try {
+          const newAgent = req.body
+          const addedAgent = await db.collection('user').insertOne(newAgent)
+          res.status(200).json(addedAgent)
+      } catch (err) {
+          console.log(err)
+          throw err
+      } 
+})
+
+
+//******************* */  Les API Rest des Admin//******************* */
+
+// Tous les agents
+app.get('/admin/list/', (req,res) => {
+  db.collection('user').find({"role": "ADMIN"}).toArray(function(err, docs) {
+      if (err) {
+          console.log(err)
+          throw err
+      }
+      res.status(200).json(docs)
+    }) 
+})
