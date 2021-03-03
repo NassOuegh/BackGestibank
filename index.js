@@ -47,8 +47,20 @@ app.get("/clients/list/attente", (req, res) => {
     });
 });
 
+app.get("/clients/list/valide", (req, res) => {
+  db.collection("user")
+    .find({"role": "CLIENT", "status": "VALIDE"})
+    .toArray(function (err, docs) {
+      if (err) {
+        console.log(err);
+        throw err;
+      }
+      res.status(200).json(docs);
+    });
+});
+
 app.get("/clients/list/:mail", async (req, res) => {
-  const id = parseInt(req.params.id);
+  const mail = parseInt(req.params.mail);
   try {
     const docs = await db.collection("user").findOne({ mail });
     res.status(200).json(docs);
@@ -71,7 +83,7 @@ app.post("/clients/add", async (req, res) => {
 
 app.put("/clients/:mail", async (req, res) => {
   try {
-    const id = parseInt(req.params.id);
+    const mail = parseInt(req.params.mail);
     const replacementUser = req.body;
     const user = await db
       .collection("user")
@@ -85,7 +97,7 @@ app.put("/clients/:mail", async (req, res) => {
 
 app.delete("/users/:mail", async (req, res) => {
   try {
-    const id = parseInt(req.params.id);
+    const mail = parseInt(req.params.mail);
     const user = await db.collection("user").deleteOne({ mail });
     res.status(200).json(user);
   } catch (err) {
