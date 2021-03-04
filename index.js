@@ -23,6 +23,32 @@ MongoClient.connect(url, function (err, client) {
   db = client.db(dbName);
 });
 
+//tous les comptes
+app.get("/users/list", (req, res) => {
+  db.collection("user")
+    .find({})
+    .toArray(function (err, docs) {
+      if (err) {
+        console.log(err);
+        throw err;
+      }
+      res.status(200).json(docs);
+    });
+});
+
+app.get("/users/list/:mail", async (req, res) => {
+  const mail = req.params.mail
+  try {
+    const docs = await db.collection("user").findOne({mail});
+    res.status(200).json(docs);
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+})
+
+
+//tous les clients
 app.get("/clients/list", (req, res) => {
   db.collection("user")
     .find({"role": "CLIENT"})
@@ -60,15 +86,15 @@ app.get("/clients/list/valide", (req, res) => {
 });
 
 app.get("/clients/list/:mail", async (req, res) => {
-  const mail = parseInt(req.params.mail);
+  const mail = req.params.mail
   try {
-    const docs = await db.collection("user").findOne({ mail });
+    const docs = await db.collection("user").findOne({mail});
     res.status(200).json(docs);
   } catch (err) {
     console.log(err);
     throw err;
   }
-});
+})
 
 app.post("/clients/add", async (req, res) => {
   try {
