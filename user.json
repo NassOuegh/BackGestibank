@@ -1,0 +1,105 @@
+[{
+  "_id": {
+    "$oid": "603d02da3a6a754830aec80e"
+  },
+  "tel": "0650982382",
+  "status": "EN ATTENTE",
+  "mail": "n@gmail.com",
+  "name": "Nass",
+  "password": "1234",
+  "role": "AGENT"
+},{
+  "_id": {
+    "$oid": "603ec66d490d534e840983e5"
+  },
+  "mail": "a@gmail.com",
+  "name": "Amin",
+  "password": "1234",
+  "status": "EN ATTENTE",
+  "tel": "4589548",
+  "role": "ADMIN"
+},{
+  "_id": {
+    "$oid": "603f5614bd324e26d016f8cd"
+  },
+  "mail": "adam@mail.com",
+  "name": "Adam",
+  "password": "1234",
+  "status": "EN ATTENTE",
+  "tel": "34786543",
+  "role": "CLIENT",
+  "type": "CAC"
+},{
+  "_id": {
+    "$oid": "603f5d0fbd324e26d016f8ce"
+  },
+  "mail": "hedi@gmail.com",
+  "name": "Hedi",
+  "password": "1234",
+  "status": "EN ATTENTE",
+  "tel": "34787433",
+  "type": "type",
+  "role": "CLIENT"
+},{
+  "_id": {
+    "$oid": "603f5e9cbd324e26d016f8d0"
+  },
+  "mail": "amel@gmail.com",
+  "name": "Amel",
+  "password": "1234",
+  "status": "EN ATTENTE",
+  "tel": "3467335",
+  "type": "CSC",
+  "role": "CLIENT"
+},{
+  "_id": {
+    "$oid": "603f7da9573e592264712227"
+  },
+  "mail": "jamel@gmail.com",
+  "matricule": "1",
+  "name": "Jamel",
+  "password": "\")s%Z7!5",
+  "role": "AGENT",
+  "tel": "015426851"
+},{
+  "_id": {
+    "$oid": "603f7dd1573e592264712228"
+  },
+  "mail": "neida@gmail.com",
+  "matricule": "2",
+  "name": "Neida",
+  "password": "u",
+  "role": "AGENT",
+  "tel": "015926851"
+},{
+  "_id": {
+    "$oid": "603f7ee9573e592264712229"
+  },
+  "mail": "farah@gmail.com",
+  "matricule": "3",
+  "name": "Farah",
+  "password": "`CX%Y@%",
+  "role": "AGENT",
+  "tel": "015938851"
+},{
+  "_id": {
+    "$oid": "603f88a4573e59226471222a"
+  },
+  "mail": "ma@gmail.com",
+  "matricule": "4",
+  "name": "Mohammed Maine",
+  "password": "u'R2X",
+  "role": "AGENT",
+  "tel": "01075426851"
+},{
+  "_id": {
+    "$oid": "604166b61e5d32486c566163"
+  },
+  "mail": "n",
+  "name": "Nassim ADMINISTRATEUR",
+  "password": "1234",
+  "role": "CLIENT",
+  "status": "VALIDE",
+  "tel": "00000",
+  "type": "CAC"
+}]
