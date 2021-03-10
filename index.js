@@ -148,9 +148,20 @@ app.put("/clients/:mail", async (req, res) => {
   }
 });
 
+app.delete("/clients/:mail", async (req, res) => {
+  try {
+    const mail = req.params.mail;
+    const user = await db.collection("user").deleteOne({ mail });
+    res.status(200).json(user);
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+});
+
 app.delete("/users/:mail", async (req, res) => {
   try {
-    const mail = parseInt(req.params.mail);
+    const mail = req.params.mail;
     const user = await db.collection("user").deleteOne({ mail });
     res.status(200).json(user);
   } catch (err) {
@@ -178,6 +189,17 @@ app.post("/agents/add/", async (req, res) => {
     const newAgent = req.body;
     const addedAgent = await db.collection("user").insertOne(newAgent);
     res.status(200).json(addedAgent);
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+});
+
+app.delete("/agents/:mail", async (req, res) => {
+  try {
+    const mail = req.params.mail;
+    const user = await db.collection("user").deleteOne({ mail });
+    res.status(200).json(user);
   } catch (err) {
     console.log(err);
     throw err;
