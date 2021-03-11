@@ -141,6 +141,7 @@ app.put("/clients/:mail", async (req, res) => {
     const user = await db
       .collection("user")
       .replaceOne({ mail }, replacementUser);
+    //let client = db.find(user=> user.mail==mail);
     res.status(200).json(user);
   } catch (err) {
     console.log(err);
@@ -183,12 +184,38 @@ app.get("/agents/list/", (req, res) => {
     });
 });
 
+app.get("/agents/:mail", async (req, res) => {
+  const mail = req.params.mail;
+  try {
+    const docs = await db.collection("user").findOne({ mail });
+    res.status(200).json(docs);
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+});
+
 // Ajout d'un nouvel agent par l'admin
 app.post("/agents/add/", async (req, res) => {
   try {
     const newAgent = req.body;
     const addedAgent = await db.collection("user").insertOne(newAgent);
     res.status(200).json(addedAgent);
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+});
+
+app.put("/agents/:mail", async (req, res) => {
+  try {
+    const mail = req.params.mail;
+    const replacementUser = req.body;
+    const user = await db
+      .collection("user")
+      .replaceOne({ mail }, replacementUser);
+    //let client = db.find(user=> user.mail==mail);
+    res.status(200).json(user);
   } catch (err) {
     console.log(err);
     throw err;
