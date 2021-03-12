@@ -198,9 +198,28 @@ app.get("/agents/:mail", async (req, res) => {
 // Ajout d'un nouvel agent par l'admin
 app.post("/agents/add/", async (req, res) => {
   try {
+    const userData = req.body;
+    const accountmail = userData.mail;
+    const accountname = userData.name;
+    const accountpwd = userData.password;
     const newAgent = req.body;
     const addedAgent = await db.collection("user").insertOne(newAgent);
     res.status(200).json(addedAgent);
+    var mailOptions = {
+      from: "tt858199@gmail.com",
+      to: accountmail,
+      subject: "Confirmation création de compte",
+      text: "Bonjour " + accountname +", \n Vous avez été ajouté comme agent sur Gestibank. Vos identifiants sont: \n Login: "
+      +accountmail+"\n Mot de passe: "+accountpwd,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
   } catch (err) {
     console.log(err);
     throw err;
